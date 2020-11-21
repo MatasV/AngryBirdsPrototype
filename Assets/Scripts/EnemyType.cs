@@ -1,0 +1,1 @@
+﻿public enum EnemyType { PIG_GREEN };
