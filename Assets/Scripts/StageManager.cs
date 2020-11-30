@@ -10,10 +10,8 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager instance;
 
-    public delegate void OnBirdCountChanged(int BirdsLeft);
-
+    public delegate void OnBirdCountChanged(Queue<GameObject> birdQueue);
     public OnBirdCountChanged onBirdCountChanged;
-
 
     public List<Rigidbody2D> movingEntities = new List<Rigidbody2D>();
     private List<Enemy> activeEnemies = new List<Enemy>();
@@ -23,12 +21,13 @@ public class StageManager : MonoBehaviour
     private Queue<GameObject> birdQueue = new Queue<GameObject>();
 
     private Bird currentBird = null;
+    private int startingEnemies = 0;
 
     public bool DebugMode = false;
 
     private void BirdCountChanged()
     {
-        onBirdCountChanged.Invoke(birdQueue.Count);
+        onBirdCountChanged.Invoke(birdQueue);
     }
     private void Update()
     {
@@ -89,6 +88,7 @@ public class StageManager : MonoBehaviour
     private void Win()
     {
         Debug.Log("Win!");
+        ScoreManager.instance.ReportScore(startingEnemies, activeEnemies.Count);
     }
 
     private void Continue()
@@ -99,10 +99,13 @@ public class StageManager : MonoBehaviour
         sling.gameObject.SetActive(true);
         SpawnNextBird();
     }
+
     private void Lose()
     {
         Debug.Log("Lose");
+        ScoreManager.instance.ReportScore(startingEnemies, activeEnemies.Count);
     }
+
     public void UnregisterMovingEntity([NotNull] Rigidbody2D rb)
     {
         movingEntities.Remove(rb);
@@ -111,9 +114,10 @@ public class StageManager : MonoBehaviour
     public void RegisterActiveEnemy([NotNull] Enemy enemy)
     {
         activeEnemies.Add(enemy);
+        startingEnemies++;
     }
 
-    private void CheckWinConditions()
+    public void CheckWinConditions()
     {
         if (activeEnemies.Count > 0 && birdQueue.Count > 0)
         {

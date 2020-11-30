@@ -16,7 +16,7 @@ public class ScoreGainTextController : MonoBehaviour
     public void DamageTaken(float damageTaken)
     {
         scoreText.enabled = true;
-        scoreText.text = (damageTaken * 10).ToString();
+        scoreText.text = ((int)damageTaken * 10).ToString();
 
         Invoke(nameof(Disable), 2f);
     }

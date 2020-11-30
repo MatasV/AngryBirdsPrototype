@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(SpringJoint2D))]
 public class Bird : MonoBehaviour
 {
+    private bool hasBeenLaunched = false;
+
     private Rigidbody2D rigidBody;
     private Camera mainCam;
     private Transform slingShotPosition;
@@ -53,14 +55,25 @@ public class Bird : MonoBehaviour
             if (slingShotPosition.gameObject.activeInHierarchy && allowLaunch &&
                 Vector2.Distance(rigidBody.position, slingShotPosition.position) < MinPullDistanceToLaunch)
             {
-                slingShot.StopRenderingLines();
-                slingShotPosition.gameObject.SetActive(false);
-                StageManager.instance.RegisterMovingEntity(rigidBody);
-                StageManager.instance.Launched();
+                Launch();
             }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (hasBeenLaunched) ActivateSpecial();
         }
     } 
     
+    private void Launch()
+    {
+        hasBeenLaunched = true;
+        slingShot.StopRenderingLines();
+        slingShotPosition.gameObject.SetActive(false);
+        StageManager.instance.RegisterMovingEntity(rigidBody);
+        StageManager.instance.Launched();
+    }
+
     public Vector2 CalculatePosition(float elapsedTime){
         return Physics2D.gravity * elapsedTime * elapsedTime * 0.5f +
                launchVelocity * elapsedTime + (Vector2)slingShotPosition.position;
@@ -81,6 +94,11 @@ public class Bird : MonoBehaviour
         }
     }
     
+    protected virtual void ActivateSpecial()
+    {
+        Debug.Log("Default Special Activated");
+    }
+
     private void OnMouseUp()
     {
         dragging = false;
