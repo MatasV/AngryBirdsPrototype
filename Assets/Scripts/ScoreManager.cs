@@ -47,7 +47,8 @@ public class ScoreManager : MonoBehaviour
 
     public void ReportScore(int startingEnemies,int currentEnemies)
     {
-        onStageEnded?.Invoke(CurrentStageName, (float)currentEnemies / (float)startingEnemies, CurrentScore);
+        if(currentEnemies > 0) onStageEnded?.Invoke(CurrentStageName, (float)currentEnemies / (float)startingEnemies, CurrentScore);
+        else onStageEnded?.Invoke(CurrentStageName, 1f, CurrentScore);
     }
 
 

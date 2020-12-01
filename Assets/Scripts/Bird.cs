@@ -81,16 +81,19 @@ public class Bird : MonoBehaviour
     
     private void OnMouseDown()
     {
-        dragging = true;
+        if (!hasBeenLaunched)
+        {
+            dragging = true;
 
-        if (rigidBody != null)
-        {
-            rigidBody.isKinematic = true;
-            slingShot.RenderLines(transform);
-        }
-        else
-        {
-            Debug.Log("Rigidbody Not Found on the bird");
+            if (rigidBody != null)
+            {
+                rigidBody.isKinematic = true;
+                slingShot.RenderLines(transform);
+            }
+            else
+            {
+                Debug.Log("Rigidbody Not Found on the bird");
+            }
         }
     }
     
@@ -101,20 +104,23 @@ public class Bird : MonoBehaviour
 
     private void OnMouseUp()
     {
-        dragging = false;
+        if (!hasBeenLaunched)
+        {
+            dragging = false;
 
-        if (rigidBody != null)
-        {
-            slingShot.HideTrajectory();
-            rigidBody.isKinematic = false;
-            if (Vector2.Distance(rigidBody.position, slingShotPosition.position) > distanceToLaunch)
+            if (rigidBody != null)
             {
-                allowLaunch = true;
+                slingShot.HideTrajectory();
+                rigidBody.isKinematic = false;
+                if (Vector2.Distance(rigidBody.position, slingShotPosition.position) > distanceToLaunch)
+                {
+                    allowLaunch = true;
+                }
             }
-        }
-        else
-        {
-            Debug.Log("Rigidbody Not Found on the bird");
+            else
+            {
+                Debug.Log("Rigidbody Not Found on the bird");
+            }
         }
     }
 }

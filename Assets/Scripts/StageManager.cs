@@ -27,7 +27,7 @@ public class StageManager : MonoBehaviour
 
     private void BirdCountChanged()
     {
-        onBirdCountChanged.Invoke(birdQueue);
+        onBirdCountChanged?.Invoke(birdQueue);
     }
     private void Update()
     {
@@ -43,7 +43,7 @@ public class StageManager : MonoBehaviour
     }
 
     private void SpawnNextBird()
-    { //Invoke delegate
+    {
         var birdGO = Instantiate(birdQueue.Dequeue(), sling.transform.position, Quaternion.identity);
         var bird = birdGO.GetComponent<Bird>();
         bird.Setup();
@@ -76,7 +76,6 @@ public class StageManager : MonoBehaviour
     
     private static void Restart()
     {
-        Debug.Log("Time To Restart");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -87,13 +86,11 @@ public class StageManager : MonoBehaviour
 
     private void Win()
     {
-        Debug.Log("Win!");
         ScoreManager.instance.ReportScore(startingEnemies, activeEnemies.Count);
     }
 
     private void Continue()
     {
-        Debug.Log("Next Life!");
         UnregisterMovingEntity(currentBird.gameObject.GetComponent<Rigidbody2D>());
         Destroy(currentBird.gameObject);
         sling.gameObject.SetActive(true);
@@ -102,7 +99,6 @@ public class StageManager : MonoBehaviour
 
     private void Lose()
     {
-        Debug.Log("Lose");
         ScoreManager.instance.ReportScore(startingEnemies, activeEnemies.Count);
     }
 

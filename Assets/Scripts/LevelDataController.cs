@@ -14,47 +14,28 @@ public class LevelDataController : MonoBehaviour
 
     private void LoadAvailableStagesFromBuildMenu()
     {
-        for(int i = 2; i < SceneManager.sceneCountInBuildSettings; i++)
+        for (int i = 2; i < SceneManager.sceneCountInBuildSettings; i++)
         {
             var path = SceneUtility.GetScenePathByBuildIndex(i);
             var lastPart = Path.GetFileNameWithoutExtension(path.Split('/').Last());
-            
+
             Debug.Log(path);
             stagesData.Add(new StageData(lastPart, 0f, 0));
         }
     }
-    
+
     public List<StageData> GetStageData()
     {
         return stagesData;
     }
 
-    private void Start()
+    private void Awake()
     {
-        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-        SceneManager.sceneUnloaded += SceneManager_sceneUnloaded;
-    }
-
-    private void SceneManager_sceneUnloaded(Scene arg0)
-    {
-        if (ScoreManager.instance != null) {
-            Debug.Log("Scene unloaded fond ScoreManager instance");
-            ScoreManager.instance.onStageEnded -= UpdateLevelData; }
-    }
-
-    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
-        if (ScoreManager.instance != null) {
-            Debug.Log("Scene loaded found ScoreManager instance");
-            ScoreManager.instance.onStageEnded += UpdateLevelData; }
-    }
-
-    void Awake()
-    {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(gameObject);
-        } else
+        }
+        else
         {
             instance = this;
         }
@@ -62,20 +43,41 @@ public class LevelDataController : MonoBehaviour
         LoadAvailableStagesFromBuildMenu();
         LoadLevelData();
         DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+    }
+
+    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        if (ScoreManager.instance != null)
+        {
+            Debug.Log("Scene loaded found ScoreManager instance");
+            ScoreManager.instance.onStageEnded += UpdateLevelData;
+        }
+        else Debug.Log("Couldn't find ScoreManage instance");
     }
 
     private void UpdateLevelData(string stageName, float completionPercentage, int maxScore)
     {
-        var foundStage = stagesData.FirstOrDefault(x => x.stageName == stageName);
+        Debug.Log(stageName);
+        StageData foundStage;
 
-        if(!EqualityComparer<StageData>.Default.Equals(foundStage, default))
-        {
-            if (foundStage.stageCompletePercentage < completionPercentage) foundStage.stageCompletePercentage = completionPercentage;
-            if (foundStage.maxScore < maxScore) foundStage.maxScore = maxScore;
-        } else
+        try { foundStage = stagesData.First(x => x.stageName == stageName); }
+        catch
         {
             Debug.LogWarning("Tried to save stage data, but couldn't find the required stage in the list");
+            return;
         }
+
+        Debug.Log(gameObject.name);
+        Debug.Log(stageName + " " + completionPercentage.ToString() + " " + maxScore.ToString());
+        Debug.Log(foundStage.maxScore + " " + foundStage.stageCompletePercentage + " " + foundStage.stageName);
+
+        if (foundStage.stageCompletePercentage < completionPercentage) foundStage.stageCompletePercentage = completionPercentage;
+        if (foundStage.maxScore < maxScore) foundStage.maxScore = maxScore;
+
+        LevelParser.SaveStageData(stagesData);
+
     }
 
     private void LoadLevelData()
@@ -90,17 +92,19 @@ public class LevelDataController : MonoBehaviour
 
         foreach (var stageData in loadedStageData)
         {
-            var foundStage = stagesData.FirstOrDefault(x => x.stageName == stageData.stageName);
+            StageData foundStage;
 
-            if (!EqualityComparer<StageData>.Default.Equals(foundStage, default))
-            {
-                foundStage.stageName = stageData.stageName;
-                foundStage.stageCompletePercentage = stageData.stageCompletePercentage;
-                foundStage.maxScore = stageData.maxScore;
-            } else
+            try { foundStage = stagesData.FirstOrDefault(x => x.stageName == stageData.stageName); }
+            catch
             {
                 Debug.LogWarning("Save data contains a level name that no longer exists in the game, dismissing...");
+                continue;
             }
+
+            foundStage.stageName = stageData.stageName;
+            foundStage.stageCompletePercentage = stageData.stageCompletePercentage;
+            foundStage.maxScore = stageData.maxScore;
+
         }
     }
 

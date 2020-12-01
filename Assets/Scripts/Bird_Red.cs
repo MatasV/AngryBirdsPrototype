@@ -11,8 +11,6 @@ public class Bird_Red : Bird
 
     protected sealed override void ActivateSpecial()
     {
-        Debug.Log("Activating Special");
-
         if (specialActivated) return;
 
         var affectedObjects = Physics2D.OverlapCircleAll(transform.position, explosionSize);
@@ -21,11 +19,8 @@ public class Bird_Red : Bird
         {
             var rb = col.GetComponent<Rigidbody2D>();
             if (rb == null) continue;
-            Debug.Log("! +" + col.name);
-
             var trajectoryVector = col.transform.position - transform.position;
 
-            Debug.Log("Trajectory magnitude" + trajectoryVector.magnitude);
             if (trajectoryVector.magnitude > 0)
                 rb.AddForce(trajectoryVector.normalized * (explosionStrength / trajectoryVector.magnitude), ForceMode2D.Impulse);
         }
