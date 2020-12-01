@@ -7,7 +7,7 @@ public class Bird : MonoBehaviour
 {
     private bool hasBeenLaunched = false;
 
-    private Rigidbody2D rigidBody;
+    protected Rigidbody2D rigidBody;
     private Camera mainCam;
     private Transform slingShotPosition;
     private Sling slingShot;
@@ -23,8 +23,10 @@ public class Bird : MonoBehaviour
     private const float MaxDrag = 2.0f;
 
     private Vector2 launchVelocity;
+
+    protected bool specialActivated = false;
     
-    public void Setup()
+    public virtual void Setup()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         slingShotPosition = FindObjectOfType<Sling>().GetComponent<Transform>();
@@ -99,7 +101,11 @@ public class Bird : MonoBehaviour
     
     protected virtual void ActivateSpecial()
     {
-        Debug.Log("Default Special Activated");
+        if (!specialActivated)
+        {
+            Debug.Log("Default Special Activated");
+            specialActivated = true;
+        }
     }
 
     private void OnMouseUp()

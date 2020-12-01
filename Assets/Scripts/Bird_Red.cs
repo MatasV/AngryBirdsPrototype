@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ParticleSystem))]
 public class Bird_Red : Bird
 {
-    private bool specialActivated = false;
+    private ParticleSystem ps;
 
     [SerializeField] private float explosionSize = 2f;
     [SerializeField] private float explosionStrength = 2f;
+
+
+    public sealed override void Setup() 
+    {
+        base.Setup();
+        ps = GetComponent<ParticleSystem>();
+    }
 
     protected sealed override void ActivateSpecial()
     {
@@ -26,5 +34,15 @@ public class Bird_Red : Bird
         }
 
         specialActivated = true;
+
+        ps.Play();
+
+        Invoke(nameof(DestroyMyself), ps.main.startLifetime.constantMax);
+    }
+
+    private void DestroyMyself()
+    {
+        StageManager.instance.UnregisterMovingEntity(rigidBody);
+        Destroy(gameObject);
     }
 }

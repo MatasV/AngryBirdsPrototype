@@ -17,7 +17,7 @@ public class StageManager : MonoBehaviour
     private List<Enemy> activeEnemies = new List<Enemy>();
     private Sling sling;
     
-    [SerializeField] private GameObject birdPrefab;
+    [SerializeField] private GameObject[] birdPrefabs;
     private Queue<GameObject> birdQueue = new Queue<GameObject>();
 
     private Bird currentBird = null;
@@ -52,9 +52,9 @@ public class StageManager : MonoBehaviour
     }
     private void Setup()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < birdPrefabs.Length; i++)
         {
-            birdQueue.Enqueue(birdPrefab);
+            birdQueue.Enqueue(birdPrefabs[i]);
         }
     }
     public void Launched()
@@ -91,8 +91,11 @@ public class StageManager : MonoBehaviour
 
     private void Continue()
     {
-        UnregisterMovingEntity(currentBird.gameObject.GetComponent<Rigidbody2D>());
-        Destroy(currentBird.gameObject);
+        if (currentBird != null)
+        {
+            UnregisterMovingEntity(currentBird.gameObject.GetComponent<Rigidbody2D>());
+            Destroy(currentBird.gameObject);
+        }
         sling.gameObject.SetActive(true);
         SpawnNextBird();
     }

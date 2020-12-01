@@ -77,7 +77,6 @@ public class LevelDataController : MonoBehaviour
         if (foundStage.maxScore < maxScore) foundStage.maxScore = maxScore;
 
         LevelParser.SaveStageData(stagesData);
-
     }
 
     private void LoadLevelData()

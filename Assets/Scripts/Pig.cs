@@ -134,6 +134,9 @@ public class Pig : MonoBehaviour, Enemy
         }
 
         if (other.relativeVelocity.magnitude > 2.0f){
+
+            if (other.gameObject.name.Contains("Bird")) CameraShake.instance?.ShakeScreen();
+
             var dmg = mass * other.relativeVelocity.magnitude;
             scoreGainTextController.DamageTaken(dmg);
             ScoreManager.instance.EnemyDamaged(dmg);
