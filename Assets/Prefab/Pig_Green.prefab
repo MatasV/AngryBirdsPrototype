@@ -478,9 +478,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1.5
   m_LinearDrag: 0.1
-  m_AngularDrag: 0.1
+  m_AngularDrag: 0.5
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98162fe8e69e2247b668ea075cc4da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteDatabase: {fileID: 11400000, guid: 8c762e6b52e67c7408bbf338af07ec3e, type: 2}
+  database: {fileID: 0}
   healthDisplay: {fileID: 0}
   scoreGainTextController: {fileID: 0}
 --- !u!1 &8655795725956943051

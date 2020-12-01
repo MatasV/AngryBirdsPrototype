@@ -29,6 +29,10 @@ public class Sling : MonoBehaviour
         leftLineRenderer.enabled = true;
         rightLineRenderer.enabled = true;
     }
+    public bool IsBirdOnSling()
+    {
+        return (birdTransform != null);
+    }
     private void InstantiateTrajectory()
     {
         for (int i = 0; i < numberOfTrajectoryDots; i++) {

@@ -54,7 +54,7 @@ public class LevelDataController : MonoBehaviour
             Debug.Log("Scene loaded found ScoreManager instance");
             ScoreManager.instance.onStageEnded += UpdateLevelData;
         }
-        else Debug.Log("Couldn't find ScoreManage instance");
+        else Debug.Log("Couldn't find ScoreManager instance");
     }
 
     private void UpdateLevelData(string stageName, float completionPercentage, int maxScore)

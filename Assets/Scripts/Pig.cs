@@ -73,6 +73,12 @@ public class Pig : MonoBehaviour, Enemy
 
         rend.sprite = database.ReturnInitialSprite();
     }
+
+    private void OnBecameInvisible()
+    {
+        OnDeath();
+    }
+
     public void OnDeath()
     {
         Debug.Log("Dead");

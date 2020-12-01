@@ -115,11 +115,11 @@ public class StageManager : MonoBehaviour
 
     public void CheckWinConditions()
     {
-        if (activeEnemies.Count > 0 && birdQueue.Count > 0)
+        if (activeEnemies.Count > 0 && birdQueue.Count > 0 || sling.IsBirdOnSling())
         {
             Continue();
         }
-        else if(activeEnemies.Count > 0 && birdQueue.Count == 0)
+        else if(activeEnemies.Count > 0 && birdQueue.Count == 0 && !sling.IsBirdOnSling())
         {
             Lose();
         }
