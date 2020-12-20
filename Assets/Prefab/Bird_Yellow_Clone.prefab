@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2803298369402687633}
   - component: {fileID: 8251965029163066229}
   - component: {fileID: -3418649099188997604}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bird_Yellow_Clone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -9,7 +9,7 @@ public class Bird_Yellow : Bird
     protected sealed override void ActivateSpecial()
     {
         if (specialActivated) return;
-
+        specialActivated = true;
         Instantiate(birdCloneGO, transform.position, transform.rotation).GetComponent<Bird_Yellow_Clone>().Init(rigidBody);
         
     }

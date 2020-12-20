@@ -13,6 +13,9 @@ public class StageManager : MonoBehaviour
     public delegate void OnBirdCountChanged(Queue<GameObject> birdQueue);
     public OnBirdCountChanged onBirdCountChanged;
 
+    public delegate void OnBirdLaunched(GameObject bird);
+    public OnBirdLaunched onBirdLaunched;
+    
     public List<Rigidbody2D> movingEntities = new List<Rigidbody2D>();
     private List<Enemy> activeEnemies = new List<Enemy>();
     private Sling sling;
@@ -24,7 +27,8 @@ public class StageManager : MonoBehaviour
     private int startingEnemies = 0;
 
     public bool DebugMode = false;
-
+    
+    
     private void BirdCountChanged()
     {
         onBirdCountChanged?.Invoke(birdQueue);
@@ -57,7 +61,7 @@ public class StageManager : MonoBehaviour
             birdQueue.Enqueue(birdPrefabs[i]);
         }
     }
-    public void Launched()
+    public void Launched(GameObject obj)
     {
         StartCoroutine(CheckVelocityForRoundEnd());
     }
@@ -72,6 +76,8 @@ public class StageManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        onBirdLaunched += Launched;
     }
     
     private static void Restart()

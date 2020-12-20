@@ -73,7 +73,7 @@ public class Bird : MonoBehaviour
         slingShot.StopRenderingLines();
         slingShotPosition.gameObject.SetActive(false);
         StageManager.instance.RegisterMovingEntity(rigidBody);
-        StageManager.instance.Launched();
+        StageManager.instance.onBirdLaunched.Invoke(this.gameObject);
     }
 
     public Vector2 CalculatePosition(float elapsedTime){
@@ -83,6 +83,8 @@ public class Bird : MonoBehaviour
     
     private void OnMouseDown()
     {
+        Debug.Log("Pressed On Bird");
+        
         if (!hasBeenLaunched)
         {
             dragging = true;

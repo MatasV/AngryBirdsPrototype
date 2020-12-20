@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2803298369402687637}
   - component: {fileID: 8251965029163066229}
   - component: {fileID: 7684824117991736991}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bird_Yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.23
+  m_Radius: 0.30701253
 --- !u!114 &7684824117991736991
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5063368561608464379}
   - component: {fileID: 9075049716142954259}
   - component: {fileID: 1214048362041448705}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bird_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}

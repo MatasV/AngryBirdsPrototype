@@ -69,9 +69,9 @@ public class LevelDataController : MonoBehaviour
             return;
         }
 
-        //Debug.Log(gameObject.name);
-        //Debug.Log(stageName + " " + completionPercentage.ToString() + " " + maxScore.ToString());
-        //Debug.Log(foundStage.maxScore + " " + foundStage.stageCompletePercentage + " " + foundStage.stageName);
+        Debug.Log(gameObject.name);
+        Debug.Log(stageName + " " + completionPercentage.ToString() + " " + maxScore.ToString());
+        Debug.Log(foundStage.maxScore + " " + foundStage.stageCompletePercentage + " " + foundStage.stageName);
 
         if (foundStage.stageCompletePercentage < completionPercentage) foundStage.stageCompletePercentage = completionPercentage;
         if (foundStage.maxScore < maxScore) foundStage.maxScore = maxScore;
