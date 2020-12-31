@@ -6,177 +6,106 @@ using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StageManager : MonoBehaviour
+[CreateAssetMenu]
+public class StageManager : ScriptableObject
 {
-    public static StageManager instance;
-
     public delegate void OnBirdCountChanged(Queue<GameObject> birdQueue);
-    public OnBirdCountChanged onBirdCountChanged;
+    public static OnBirdCountChanged onBirdCountChanged;
 
     public delegate void OnBirdLaunched(GameObject bird);
-    public OnBirdLaunched onBirdLaunched;
+    public static OnBirdLaunched onBirdLaunched;
     
-    public List<Rigidbody2D> movingEntities = new List<Rigidbody2D>();
-    private List<Enemy> activeEnemies = new List<Enemy>();
-    private Sling sling;
-    
-    [SerializeField] private GameObject[] birdPrefabs;
+    [HideInInspector] public Sling sling;
+    [HideInInspector] public GameObject[] birdPrefabs;
     private Queue<GameObject> birdQueue = new Queue<GameObject>();
 
     private Bird currentBird = null;
     private int startingEnemies = 0;
 
     public bool DebugMode = false;
-    
-    
+
+    [SerializeField] private ScoreManager scoreManager;
+    [HideInInspector] public EntityController entityController = null;
     private void BirdCountChanged()
     {
         onBirdCountChanged?.Invoke(birdQueue);
     }
-    private void Update()
+
+    public void StartUp(Sling sling)
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Restart();
-        }
-    }
-    private void Start()
-    {
+        this.sling = sling;
+        onBirdLaunched += Launched;
         Setup();
         SpawnNextBird();
     }
 
+    public bool AnyBirdsLeft => birdQueue.Count > 0;
+    
     private void SpawnNextBird()
     {
         var birdGO = Instantiate(birdQueue.Dequeue(), sling.transform.position, Quaternion.identity);
         var bird = birdGO.GetComponent<Bird>();
-        bird.Setup();
+        bird.Setup(this);
         currentBird = bird;
+        sling.birdTransform = bird.transform;
         BirdCountChanged();
     }
-    private void Setup()
-    {
+    private void Setup(){
+    
+        birdQueue.Clear();
         for (int i = 0; i < birdPrefabs.Length; i++)
         {
             birdQueue.Enqueue(birdPrefabs[i]);
         }
-    }
-    public void Launched(GameObject obj)
-    {
-        StartCoroutine(CheckVelocityForRoundEnd());
-    }
-    private void Awake()
-    {
-        sling = FindObjectOfType<Sling>();
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        onBirdLaunched += Launched;
+        startingEnemies = 0;
     }
     
-    private static void Restart()
+    public void Launched(GameObject obj)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        sling.StopRenderingLines();
+        sling.launchTransform.gameObject.SetActive(false);
+        entityController.StartVelocityChecking();
     }
 
-    public void RegisterMovingEntity([NotNull]Rigidbody2D rb)
+    public void Win()
     {
-        movingEntities.Add(rb);
+        scoreManager.ReportScore(startingEnemies, entityController.activeEnemies.Count);
+    }
+    
+    public void UnregisterMovingEntity([NotNull] Rigidbody2D rb)
+    {
+        entityController.movingEntities.Remove(rb);
+    }
+    
+    public void RegisterActiveEnemy([NotNull] Enemy enemy)
+    {
+        entityController.activeEnemies.Add(enemy);
+        ++startingEnemies;
+    }
+    public void RegisterMovingEntity([NotNull] Rigidbody2D rb)
+    {
+        entityController.movingEntities.Add(rb);
     }
 
-    private void Win()
-    {
-        ScoreManager.instance.ReportScore(startingEnemies, activeEnemies.Count);
-    }
-
-    private void Continue()
+    public void Continue()
     {
         if (currentBird != null)
         {
             UnregisterMovingEntity(currentBird.gameObject.GetComponent<Rigidbody2D>());
             Destroy(currentBird.gameObject);
         }
-        sling.gameObject.SetActive(true);
+        sling.launchTransform.gameObject.SetActive(true);
         SpawnNextBird();
     }
 
-    private void Lose()
+    public void Lose()
     {
-        ScoreManager.instance.ReportScore(startingEnemies, activeEnemies.Count);
+        scoreManager.ReportScore(startingEnemies, entityController.activeEnemies.Count);
     }
 
-    public void UnregisterMovingEntity([NotNull] Rigidbody2D rb)
-    {
-        movingEntities.Remove(rb);
-    }
-    
-    public void RegisterActiveEnemy([NotNull] Enemy enemy)
-    {
-        activeEnemies.Add(enemy);
-        startingEnemies++;
-    }
-
-    public void CheckWinConditions()
-    {
-        if (activeEnemies.Count > 0 && birdQueue.Count > 0 || sling.IsBirdOnSling())
-        {
-            Continue();
-        }
-        else if(activeEnemies.Count > 0 && birdQueue.Count == 0 && !sling.IsBirdOnSling())
-        {
-            Lose();
-        }
-        else
-        {
-            Win();
-        }
-    }
-    
     public void UnregisterActiveEnemy([NotNull] Enemy enemy)
     {
-        activeEnemies.Remove(enemy);
+        entityController.activeEnemies.Remove(enemy);
     }
-    private IEnumerator CheckVelocityForRoundEnd()
-    {
-        var movingEntityCount = 0;
-
-        foreach (var movingEntity in movingEntities)
-        {
-            if (Math.Abs(movingEntity.velocity.magnitude) > 0.2f || movingEntity.angularVelocity > 0.2f)
-            {
-                movingEntityCount++;
-            }
-        }
-
-        if (movingEntityCount < 1)
-        {
-            yield return new WaitForSeconds(2f);
-            
-            movingEntityCount = 0;
-
-            foreach (var movingEntity in movingEntities)
-            {
-                if (movingEntity.velocity.magnitude > 0.2f || movingEntity.angularVelocity > 0.2f)
-                {
-                    movingEntityCount++;
-                }
-            }
-
-            if (movingEntityCount < 1) //game ended, lets check results
-            {
-                CheckWinConditions();
-                StopAllCoroutines();
-            }
-        }
-        
-        yield return new WaitForSeconds(2f);
-        
-        StartCoroutine(CheckVelocityForRoundEnd());
-    }
+   
 }

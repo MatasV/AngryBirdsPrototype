@@ -155,5 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ac7eb79d818ea4ebea901630f59c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageManager: {fileID: 11400000, guid: 98177e763a5dda44f8fd54ddd7da3c7f, type: 2}
   birdCloneGO: {fileID: 2803298369402687634, guid: 7317fe73c3883d6408d47d43c3d3ce80,
     type: 3}

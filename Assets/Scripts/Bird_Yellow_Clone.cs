@@ -6,12 +6,12 @@ using UnityEngine;
 public class Bird_Yellow_Clone : MonoBehaviour
 {
     public Rigidbody2D rb;
-
+    [SerializeField] private StageManager stageManager;
     public void Init(Rigidbody2D _parentRB) {
         rb = GetComponent<Rigidbody2D>();
         rb.GetCopyOf(_parentRB);
 
-        StageManager.instance.RegisterMovingEntity(rb);
+        stageManager.RegisterMovingEntity(rb);
 
         rb.velocity *= 0.6f;
 
@@ -20,7 +20,7 @@ public class Bird_Yellow_Clone : MonoBehaviour
 
     private void DestroyMyself()
     {
-        StageManager.instance.UnregisterMovingEntity(rb);
+        stageManager.UnregisterMovingEntity(rb);
         Destroy(gameObject);
     }
 }

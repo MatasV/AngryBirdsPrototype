@@ -6,11 +6,10 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using System.IO;
 
-public class LevelDataController : MonoBehaviour
+[CreateAssetMenu]
+public class LevelDataController : ScriptableObject
 {
     [SerializeField] private List<StageData> stagesData = new List<StageData>();
-
-    public static LevelDataController instance;
 
     private void LoadAvailableStagesFromBuildMenu()
     {
@@ -29,49 +28,21 @@ public class LevelDataController : MonoBehaviour
         return stagesData;
     }
 
-    private void Awake()
+    public void Awake()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
-
         LoadAvailableStagesFromBuildMenu();
         LoadLevelData();
-        DontDestroyOnLoad(gameObject);
-
-        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+        ScoreManager.onStageEnded += UpdateLevelData;
     }
-
-    private void SceneManager_sceneLoaded(Scene arg0, LoadSceneMode arg1)
+    public void UpdateLevelData(string stageName, float completionPercentage, int maxScore)
     {
-        if (ScoreManager.instance != null)
-        {
-            Debug.Log("Scene loaded found ScoreManager instance");
-            ScoreManager.instance.onStageEnded += UpdateLevelData;
-        }
-        else Debug.Log("Couldn't find ScoreManager instance");
-    }
-
-    private void UpdateLevelData(string stageName, float completionPercentage, int maxScore)
-    {
-        Debug.Log(stageName);
         StageData foundStage;
 
         try { foundStage = stagesData.First(x => x.stageName == stageName); }
         catch
         {
-            Debug.LogWarning("Tried to save stage data, but couldn't find the required stage in the list");
             return;
         }
-
-        Debug.Log(gameObject.name);
-        Debug.Log(stageName + " " + completionPercentage.ToString() + " " + maxScore.ToString());
-        Debug.Log(foundStage.maxScore + " " + foundStage.stageCompletePercentage + " " + foundStage.stageName);
 
         if (foundStage.stageCompletePercentage < completionPercentage) foundStage.stageCompletePercentage = completionPercentage;
         if (foundStage.maxScore < maxScore) foundStage.maxScore = maxScore;
@@ -106,6 +77,4 @@ public class LevelDataController : MonoBehaviour
 
         }
     }
-
-
 }

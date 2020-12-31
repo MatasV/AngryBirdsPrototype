@@ -17,7 +17,7 @@ public class StageDisplay : MonoBehaviour
     [SerializeField] private TMP_Text maxScoreText;
 
     [SerializeField] private Button enterSceneButton;
-
+    [SerializeField] private SceneLoader sceneLoader;
     public void SetupStageDisplay(StageData stage)
     {
         checkMarkImage.fillAmount = stage.stageCompletePercentage;
@@ -30,10 +30,8 @@ public class StageDisplay : MonoBehaviour
         else medalThree.SetActive(false);
 
         stageName.text = stage.stageName;
-
         maxScoreText.text = stage.maxScore != 0 ? stage.maxScore.ToString() : "Not Played Yet!";
-
-        enterSceneButton.onClick.AddListener(() => SceneLoader.instance.StartScene(stage.stageName));
+        enterSceneButton.onClick.AddListener(() => sceneLoader.StartScene(stage.stageName));
     }
 
 }

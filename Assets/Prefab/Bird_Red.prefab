@@ -157,8 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cec9fd9a4ce4d46b158b0dd355009a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageManager: {fileID: 0}
   explosionSize: 5
   explosionStrength: 5
+  stageManager: {fileID: 11400000, guid: 98177e763a5dda44f8fd54ddd7da3c7f, type: 2}
 --- !u!198 &9075049716142954259
 ParticleSystem:
   m_ObjectHideFlags: 0

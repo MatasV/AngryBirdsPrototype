@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
         journeyLength =Vector3.Distance(startingPosition, targetPosition.position);
         StartCoroutine(nameof(StartingCameraMove));
 
-        StageManager.instance.onBirdLaunched += GetNextFollowTargetPosition;
+        StageManager.onBirdLaunched += GetNextFollowTargetPosition;
     }
 
     private void GetNextFollowTargetPosition(GameObject target)

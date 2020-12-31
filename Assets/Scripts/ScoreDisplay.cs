@@ -13,7 +13,7 @@ public class ScoreDisplay : MonoBehaviour
     private void Start()
     {
         scoreText = GetComponent<TMP_Text>();
-        ScoreManager.instance.onScoreChanged += DisplayScore;
+        ScoreManager.onScoreChanged += DisplayScore;
 
         DisplayScore(0);
     }

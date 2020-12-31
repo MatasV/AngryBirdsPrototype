@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CallSceneChanger : MonoBehaviour
 {
+    [SerializeField] private SceneLoader sceneLoader;
     public void ChangeScene(string name)
     {
-        SceneLoader.instance?.StartScene(name);
+        sceneLoader.StartScene(name);
     }
 }

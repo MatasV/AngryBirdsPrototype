@@ -10,7 +10,7 @@ public class StagePanelSetup : MonoBehaviour
 
     [SerializeField] private Transform stagesParent;
     [SerializeField] private GameObject stageInfoHolder;
-
+    [SerializeField] private LevelDataController levelDataController;
     void Start()
     {
         SetupUI();
@@ -18,7 +18,7 @@ public class StagePanelSetup : MonoBehaviour
 
     private void SetupUI()
     {
-        var stageData = LevelDataController.instance.GetStageData();
+        var stageData = levelDataController.GetStageData();
 
         foreach (var sData in stageData)
         {

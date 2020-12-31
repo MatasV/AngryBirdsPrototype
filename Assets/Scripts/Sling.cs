@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class Sling : MonoBehaviour
 {
-    private Transform birdTransform;
+    public Transform birdTransform;
     private Bird birdComponent;
 
     [SerializeField] private LineRenderer leftLineRenderer;
     [SerializeField] private LineRenderer rightLineRenderer;
-
+    public Transform launchTransform;
+    
     [SerializeField] private GameObject trajectoryDotObj;
     
     private bool render = false;
@@ -19,11 +20,12 @@ public class Sling : MonoBehaviour
     private float trajectoryTimeStep = 0.05f;
 
     public List<GameObject> trajectoryDots = new List<GameObject>();
+    
+    [SerializeField] private StageManager stageManager;
     public void RenderLines([NotNull]Transform _birdTransform)
     {
         leftLineRenderer.positionCount = 2;
         rightLineRenderer.positionCount = 2;
-        birdTransform = _birdTransform;
         render = true;
         birdComponent = birdTransform.GetComponent<Bird>();
         leftLineRenderer.enabled = true;
@@ -77,6 +79,7 @@ public class Sling : MonoBehaviour
         leftLineRenderer.sortingOrder = 3;
         rightLineRenderer.sortingOrder = -1;
         InstantiateTrajectory();
+        stageManager.StartUp(this);
     }
 
     void Update()

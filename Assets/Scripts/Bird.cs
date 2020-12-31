@@ -25,15 +25,17 @@ public class Bird : MonoBehaviour
     private Vector2 launchVelocity;
 
     protected bool specialActivated = false;
-    
-    public virtual void Setup()
+    [SerializeField] protected StageManager stageManager;
+    public virtual void Setup(StageManager stageManager)
     {
         rigidBody = GetComponent<Rigidbody2D>();
-        slingShotPosition = FindObjectOfType<Sling>().GetComponent<Transform>();
-        slingShot = FindObjectOfType<Sling>();
+        slingShotPosition = stageManager.sling.launchTransform;
+        transform.position = slingShotPosition.position;
+        slingShot = stageManager.sling;
         mainCam = Camera.main;
         springJoint = GetComponent<SpringJoint2D>();
         springJoint.connectedBody = slingShot.GetComponent<Rigidbody2D>();
+        this.stageManager = stageManager;
     }
     private void Update()
     {
@@ -69,11 +71,10 @@ public class Bird : MonoBehaviour
     
     private void Launch()
     {
+        springJoint.enabled = false;
         hasBeenLaunched = true;
-        slingShot.StopRenderingLines();
-        slingShotPosition.gameObject.SetActive(false);
-        StageManager.instance.RegisterMovingEntity(rigidBody);
-        StageManager.instance.onBirdLaunched.Invoke(this.gameObject);
+        stageManager.RegisterMovingEntity(rigidBody);
+        StageManager.onBirdLaunched.Invoke(this.gameObject);
     }
 
     public Vector2 CalculatePosition(float elapsedTime){

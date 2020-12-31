@@ -15,7 +15,7 @@ public class GameEndPanelController : MonoBehaviour
     [SerializeField] private GameObject holder;
 
     [SerializeField] private TMP_Text titleText;
-
+    [SerializeField] private SceneLoader sceneLoader;
     private void Start()
     {
         holder.SetActive(false);
@@ -23,8 +23,8 @@ public class GameEndPanelController : MonoBehaviour
         medalOne.SetActive(false);
         medalTwo.SetActive(false);
         medalThree.SetActive(false);
-
-        if(ScoreManager.instance != null) ScoreManager.instance.onStageEnded += Init;
+        
+        ScoreManager.onStageEnded += Init;
     }
     public void Init(string stageName, float completionPercentage, int maxScore)
     {
@@ -41,10 +41,10 @@ public class GameEndPanelController : MonoBehaviour
     }
     public void GoToSceneLoader()
     {
-        SceneLoader.instance?.StartScene("SceneLoader");
+        sceneLoader.StartScene("SceneLoader");
     }
     public void Restart()
     {
-        SceneLoader.instance?.StartScene(SceneManager.GetActiveScene().name);
+        sceneLoader.StartScene(SceneManager.GetActiveScene().name);
     }
 }

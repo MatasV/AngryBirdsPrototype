@@ -16,7 +16,8 @@ public class Pig : MonoBehaviour, Enemy
     [SerializeField] private ScoreGainTextController scoreGainTextController;
 
     private GameObject canvasGameObject;
-    
+    [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private StageManager stageManager;
     private float Health
     {
         get => health;
@@ -43,19 +44,19 @@ public class Pig : MonoBehaviour, Enemy
     private void Start()
     {
         Setup();
-        healthDisplay.gameObject.SetActive(StageManager.instance.DebugMode);
+        healthDisplay.gameObject.SetActive(stageManager.DebugMode);
     }
     private void OnDestroy()
     {
-        StageManager.instance.UnregisterMovingEntity(GetComponent<Rigidbody2D>());
-        StageManager.instance.UnregisterActiveEnemy(this);
+        stageManager.UnregisterMovingEntity(GetComponent<Rigidbody2D>());
+        stageManager.UnregisterActiveEnemy(this);
     }
 
     public void Setup()
     {
         rend = GetComponent<SpriteRenderer>();
-        StageManager.instance.RegisterMovingEntity(GetComponent<Rigidbody2D>());
-        StageManager.instance.RegisterActiveEnemy(this);
+        stageManager.RegisterMovingEntity(GetComponent<Rigidbody2D>());
+        stageManager.RegisterActiveEnemy(this);
         MaxHealth = Health;
         scoreGainTextController = GetComponentInChildren<ScoreGainTextController>();
 
@@ -81,7 +82,7 @@ public class Pig : MonoBehaviour, Enemy
             dead = true;
             PlayDeathParticles(database.deathParticles);
             Invoke(nameof(DestroyThis), 1f);
-            ScoreManager.instance.EnemyKilled(EnemyType.PIG_GREEN);
+            scoreManager.EnemyKilled(EnemyType.PIG_GREEN);
         }
     }
 
@@ -104,7 +105,7 @@ public class Pig : MonoBehaviour, Enemy
     public void OnDamaged()
     {
         ChangeSpriteFromDamage();
-        if (StageManager.instance.DebugMode)
+        if (stageManager.DebugMode)
         {
             healthDisplay.text = Health.ToString();
         }
@@ -133,7 +134,7 @@ public class Pig : MonoBehaviour, Enemy
 
             var dmg = mass * other.relativeVelocity.magnitude;
             scoreGainTextController.DamageTaken(dmg);
-            ScoreManager.instance.EnemyDamaged(dmg);
+            scoreManager.EnemyDamaged(dmg);
             Health -= dmg;
         }
     }

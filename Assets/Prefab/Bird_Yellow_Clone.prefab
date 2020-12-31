@@ -135,3 +135,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
+  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}

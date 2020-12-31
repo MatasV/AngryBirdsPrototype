@@ -10,10 +10,9 @@ public class Bird_Red : Bird
     [SerializeField] private float explosionSize = 2f;
     [SerializeField] private float explosionStrength = 2f;
 
-
-    public sealed override void Setup() 
+    public sealed override void Setup(StageManager stageManager) 
     {
-        base.Setup();
+        base.Setup(stageManager);
         ps = GetComponent<ParticleSystem>();
     }
 
@@ -42,7 +41,7 @@ public class Bird_Red : Bird
 
     private void DestroyMyself()
     {
-        StageManager.instance.UnregisterMovingEntity(rigidBody);
+        stageManager.UnregisterMovingEntity(rigidBody);
         Destroy(gameObject);
     }
 }

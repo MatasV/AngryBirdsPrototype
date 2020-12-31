@@ -518,6 +518,8 @@ MonoBehaviour:
   database: {fileID: 0}
   healthDisplay: {fileID: 0}
   scoreGainTextController: {fileID: 0}
+  scoreManager: {fileID: 11400000, guid: 98d7b62a82e5cc241b6a026792413698, type: 2}
+  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1 &8655795725956943051
 GameObject:
   m_ObjectHideFlags: 0

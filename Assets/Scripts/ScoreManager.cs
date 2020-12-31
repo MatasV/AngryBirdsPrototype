@@ -4,23 +4,23 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 
-public class ScoreManager : MonoBehaviour
+[CreateAssetMenu]
+public class ScoreManager : ScriptableObject
 {
-    public static ScoreManager instance;
-
+    [SerializeField] private LevelDataController levelDataController;
     [SerializeField] private ScoreDatabase scoreDatabase;
 
     private int currentScore = 0;
     public int CurrentScore {  get { return currentScore;  } set { currentScore = value; ChangeScore(); } }
 
     private string currentStageName;
-    [SerializeField] public string CurrentStageName { get { return currentStageName; } set { currentStageName = value; Debug.Log($"Going To {value} "); } }
+    public string CurrentStageName { get { return currentStageName; } set { currentStageName = value; Debug.Log($"Going To {value} "); } }
 
     public delegate void ScoreChanged(int score);
-    public ScoreChanged onScoreChanged;
+    public static ScoreChanged onScoreChanged;
 
     public delegate void OnStageEnded(string stageName, float percentageCompleted, int maxScore);
-    public OnStageEnded onStageEnded;
+    public static OnStageEnded onStageEnded;
 
     public void ChangeScore()
     {
@@ -40,16 +40,17 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        SceneManager.sceneLoaded += SetCurrentStageName;
+    }
 
-        CurrentStageName = SceneManager.GetActiveScene().name;
+    private void SetCurrentStageName(Scene scene, LoadSceneMode sceneLoadMode)
+    {
+        CurrentStageName = scene.name;
     }
 
     public void ReportScore(int startingEnemies,int currentEnemies)
     {
         onStageEnded?.Invoke(CurrentStageName, 1f-(float)currentEnemies / (float)startingEnemies, CurrentScore);
-
     }
-
 
 }

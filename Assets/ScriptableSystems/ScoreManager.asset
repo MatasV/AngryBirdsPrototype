@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a7925798f26a54482aa2bb266d1b79, type: 3}
+  m_Name: ScoreManager
+  m_EditorClassIdentifier: 
+  levelDataController: {fileID: 11400000, guid: 26c498d0689475d498f28f9a2cbbe053,
+    type: 2}
+  scoreDatabase: {fileID: 11400000, guid: e9c8293ab3146c74089ebbce8700e354, type: 2}

@@ -12,8 +12,8 @@ public class LifeDisplay : MonoBehaviour
 
     private void Start()
     {
-        StageManager.instance.onBirdCountChanged += SetHealthText;
-        StageManager.instance.onBirdCountChanged += SetupImages;
+        StageManager.onBirdCountChanged += SetHealthText;
+        StageManager.onBirdCountChanged += SetupImages;
     }
 
     private void SetHealthText(Queue<GameObject> healthRemaining)
@@ -23,10 +23,12 @@ public class LifeDisplay : MonoBehaviour
 
     private void SetupImages(Queue<GameObject> healthRemaining)
     {
-
-        foreach(Transform child in visualDisplayHolder.transform)
+        if (visualDisplayHolder != null)
         {
-            Destroy(child.gameObject);
+            foreach (Transform child in visualDisplayHolder.transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         var birdArray = healthRemaining.ToArray();
