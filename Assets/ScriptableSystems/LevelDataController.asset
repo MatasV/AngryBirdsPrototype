@@ -15,7 +15,7 @@ MonoBehaviour:
   stagesData:
   - stageName: Stage1
     stageCompletePercentage: 1
-    maxScore: 4632
+    maxScore: 59136
   - stageName: Stage2
-    stageCompletePercentage: 1
-    maxScore: 8288
+    stageCompletePercentage: 0
+    maxScore: 0

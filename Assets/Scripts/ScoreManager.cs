@@ -14,7 +14,6 @@ public class ScoreManager : ScriptableObject
     public int CurrentScore {  get { return currentScore;  } set { currentScore = value; ChangeScore(); } }
 
     private string currentStageName;
-    public string CurrentStageName { get { return currentStageName; } set { currentStageName = value; Debug.Log($"Going To {value} "); } }
 
     public delegate void ScoreChanged(int score);
     public static ScoreChanged onScoreChanged;
@@ -38,19 +37,10 @@ public class ScoreManager : ScriptableObject
         CurrentScore += value;
     }
 
-    private void Awake()
-    {
-        SceneManager.sceneLoaded += SetCurrentStageName;
-    }
-
-    private void SetCurrentStageName(Scene scene, LoadSceneMode sceneLoadMode)
-    {
-        CurrentStageName = scene.name;
-    }
-
     public void ReportScore(int startingEnemies,int currentEnemies)
     {
-        onStageEnded?.Invoke(CurrentStageName, 1f-(float)currentEnemies / (float)startingEnemies, CurrentScore);
+        currentStageName = SceneManager.GetActiveScene().name;
+        levelDataController.UpdateLevelData(currentStageName, 1f-(float)currentEnemies / (float)startingEnemies, CurrentScore);
+        onStageEnded?.Invoke(currentStageName, 1f-(float)currentEnemies / (float)startingEnemies, CurrentScore);
     }
-
 }

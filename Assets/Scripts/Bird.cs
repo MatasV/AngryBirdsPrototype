@@ -29,9 +29,13 @@ public class Bird : MonoBehaviour
     public virtual void Setup(StageManager stageManager)
     {
         rigidBody = GetComponent<Rigidbody2D>();
-        slingShotPosition = stageManager.sling.launchTransform;
-        transform.position = slingShotPosition.position;
+        
         slingShot = stageManager.sling;
+        slingShot.launchTransform.gameObject.SetActive(true);
+        slingShotPosition = slingShot.launchTransform;
+        transform.position = slingShotPosition.position;
+        slingShot.birdTransform = transform;
+        
         mainCam = Camera.main;
         springJoint = GetComponent<SpringJoint2D>();
         springJoint.connectedBody = slingShot.GetComponent<Rigidbody2D>();
@@ -71,6 +75,9 @@ public class Bird : MonoBehaviour
     
     private void Launch()
     {
+        Debug.Log("Launched");
+        slingShot.StopRenderingLines();
+        slingShot.launchTransform.gameObject.SetActive(false);
         springJoint.enabled = false;
         hasBeenLaunched = true;
         stageManager.RegisterMovingEntity(rigidBody);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,7 +7,6 @@ using UnityEngine.UI;
 
 public class LifeDisplay : MonoBehaviour
 {
-
     public TMP_Text healthDisplayText;
     public Transform visualDisplayHolder;
 
@@ -19,6 +19,12 @@ public class LifeDisplay : MonoBehaviour
     private void SetHealthText(Queue<GameObject> healthRemaining)
     {
         healthDisplayText.text = "X" + healthRemaining.Count.ToString();
+    }
+
+    private void OnDestroy()
+    {
+        StageManager.onBirdCountChanged -= SetHealthText;
+        StageManager.onBirdCountChanged -= SetupImages;
     }
 
     private void SetupImages(Queue<GameObject> healthRemaining)
@@ -54,4 +60,5 @@ public class LifeDisplay : MonoBehaviour
         }
 
     }
+    
 }

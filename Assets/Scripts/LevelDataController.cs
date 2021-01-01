@@ -9,7 +9,7 @@ using System.IO;
 [CreateAssetMenu]
 public class LevelDataController : ScriptableObject
 {
-    [SerializeField] private List<StageData> stagesData = new List<StageData>();
+    [SerializeField] private List<StageData> stagesData;
 
     private void LoadAvailableStagesFromBuildMenu()
     {
@@ -25,20 +25,19 @@ public class LevelDataController : ScriptableObject
 
     public List<StageData> GetStageData()
     {
-        return stagesData;
-    }
-
-    public void Awake()
-    {
+        if (stagesData != null) return stagesData;
+        Debug.Log("Stages Data was null");
         LoadAvailableStagesFromBuildMenu();
         LoadLevelData();
         ScoreManager.onStageEnded += UpdateLevelData;
+        return stagesData;
     }
+    
     public void UpdateLevelData(string stageName, float completionPercentage, int maxScore)
     {
         StageData foundStage;
 
-        try { foundStage = stagesData.First(x => x.stageName == stageName); }
+        try { foundStage = GetStageData().First(x => x.stageName == stageName); }
         catch
         {
             return;
@@ -47,7 +46,7 @@ public class LevelDataController : ScriptableObject
         if (foundStage.stageCompletePercentage < completionPercentage) foundStage.stageCompletePercentage = completionPercentage;
         if (foundStage.maxScore < maxScore) foundStage.maxScore = maxScore;
 
-        LevelParser.WriteToBinaryFile<List<StageData>>(Application.persistentDataPath + "/LevelData.dat", stagesData, false);
+        LevelParser.WriteToBinaryFile<List<StageData>>(Application.persistentDataPath + "/LevelData.dat", GetStageData(), false);
     }
 
     private void LoadLevelData()
@@ -64,7 +63,7 @@ public class LevelDataController : ScriptableObject
         {
             StageData foundStage;
 
-            try { foundStage = stagesData.FirstOrDefault(x => x.stageName == stageData.stageName); }
+            try { foundStage = GetStageData().FirstOrDefault(x => x.stageName == stageData.stageName); }
             catch
             {
                 Debug.LogWarning("Save data contains a level name that no longer exists in the game, dismissing...");

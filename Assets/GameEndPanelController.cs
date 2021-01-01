@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -46,5 +47,9 @@ public class GameEndPanelController : MonoBehaviour
     public void Restart()
     {
         sceneLoader.StartScene(SceneManager.GetActiveScene().name);
+    }
+    private void OnDestroy()
+    {
+        ScoreManager.onStageEnded -= Init;
     }
 }
