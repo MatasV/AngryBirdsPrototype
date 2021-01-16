@@ -42,7 +42,7 @@ public class LevelParser
                 return (T)binaryFormatter.Deserialize(stream);
             }
         }
-        catch (Exception e)
+        catch 
         {
             Debug.Log("File not found: " + filePath);
             return default(T);

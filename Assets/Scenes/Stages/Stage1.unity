@@ -3934,7 +3934,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.2565069, y: 0.9842596}
+  m_Offset: {x: 2.6484513, y: 0.9842596}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3945,7 +3945,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 17.418312, y: 11.931574}
+  m_Size: {x: 27.235165, y: 11.931574}
   m_EdgeRadius: 0
 --- !u!114 &2073972524
 MonoBehaviour:
@@ -4438,6 +4438,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sling
       objectReference: {fileID: 0}
+    - target: {fileID: 8713319448611691765, guid: 059d58bceb3ea634a885e376e1f64f2a,
+        type: 3}
+      propertyPath: audioManager
+      value: 
+      objectReference: {fileID: 11400000, guid: c51bd9dc06a7e994583e8bc13c692c03,
+        type: 2}
     - target: {fileID: 8713319449459043562, guid: 059d58bceb3ea634a885e376e1f64f2a,
         type: 3}
       propertyPath: m_LocalPosition.x

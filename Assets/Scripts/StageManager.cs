@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu]
 public class StageManager : ScriptableObject
 {
+    
     public delegate void OnBirdCountChanged(Queue<GameObject> birdQueue);
     public static OnBirdCountChanged onBirdCountChanged;
 
@@ -18,20 +19,22 @@ public class StageManager : ScriptableObject
     [HideInInspector] public GameObject[] birdPrefabs;
     private Queue<GameObject> birdQueue = new Queue<GameObject>();
 
-    private Bird currentBird = null;
-    private int startingEnemies = 0;
+    private Bird currentBird;
+    private int startingEnemies;
 
-    public bool DebugMode = false;
+    public bool DebugMode;
 
     [SerializeField] private ScoreManager scoreManager;
-    [HideInInspector] public EntityController entityController = null;
+    [SerializeField] private AudioManager audioManager;
     
-    public List<Enemy> activeEnemies = new List<Enemy>();
+    [HideInInspector] public EntityController entityController;
+    
+    private readonly List<Enemy> activeEnemies = new List<Enemy>();
 
     private const float AllMovingEntitiesStoppedCheckTime = 2f;
-    private float allMovingEntitiesStoppedTimer = 0f;
+    private float allMovingEntitiesStoppedTimer;
 
-    private bool stageRunning = false;
+    private bool stageRunning; 
     private void BirdCountChanged() => onBirdCountChanged?.Invoke(birdQueue);
     private bool AnyBirdsLeft => birdQueue.Count > 0;
     public void StartUp(Sling sling)
@@ -73,7 +76,6 @@ public class StageManager : ScriptableObject
         return movingEntityCount > 0;
     }
     
-    
     public void CheckWinConditions()
     {
         stageRunning = false;
@@ -92,13 +94,15 @@ public class StageManager : ScriptableObject
             Win();
         }
     }
+    
     private void SpawnNextBird()
     {
         var bird = Instantiate(birdQueue.Dequeue(), sling.transform.position, Quaternion.identity).GetComponent<Bird>();
-        bird.Setup(this);
+        bird.Setup(this, audioManager);
         currentBird = bird;
         BirdCountChanged();
     }
+    
     private void Setup(){
     
         birdQueue.Clear();
@@ -108,16 +112,18 @@ public class StageManager : ScriptableObject
         }
         startingEnemies = 0;
     }
-    
-    public void Launched(GameObject obj)
+
+    private void Launched(GameObject obj)
     {
         Debug.Log("Launched");
         stageRunning = true;
+        audioManager.PlaySound("Launch");
     }
 
-    public void Win()
+    private void Win()
     {
         scoreManager.ReportScore(startingEnemies, activeEnemies.Count);
+        audioManager.PlaySound("Win");
     }
     
     public void UnregisterMovingEntity([NotNull] Rigidbody2D rb)
@@ -135,7 +141,7 @@ public class StageManager : ScriptableObject
         entityController.movingEntities.Add(rb);
     }
 
-    public void Continue()
+    private void Continue()
     {
         if (currentBird != null)
         {
@@ -145,10 +151,11 @@ public class StageManager : ScriptableObject
         SpawnNextBird();
     }
 
-    public void Lose()
+    private void Lose()
     {
         onBirdLaunched -= Launched;
         scoreManager.ReportScore(startingEnemies, activeEnemies.Count);
+        audioManager.PlaySound("Lose");
     }
 
     public void UnregisterActiveEnemy([NotNull] Enemy enemy)

@@ -25,7 +25,8 @@ public class LevelDataController : ScriptableObject
 
     public List<StageData> GetStageData()
     {
-        if (stagesData != null) return stagesData;
+        if (stagesData.Count ==  SceneManager.sceneCountInBuildSettings - 2 ) return stagesData;
+        stagesData.Clear();
         Debug.Log("Stages Data was null");
         LoadAvailableStagesFromBuildMenu();
         LoadLevelData();

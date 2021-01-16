@@ -28,7 +28,6 @@ public class CameraController : MonoBehaviour
     private float cameraRatio;
     
     private GameObject targetFollow;
-    private float followSpeed = 10;
 
     private bool introRunning = false;
     private bool forwards = true;
@@ -52,7 +51,7 @@ public class CameraController : MonoBehaviour
         
         startingPosition = cam.transform.position;
         startTime = Time.time;
-        journeyLength =Vector3.Distance(startingPosition, targetPosition.position);
+        journeyLength = Vector3.Distance(startingPosition, targetPosition.position);
         StartCoroutine(nameof(StartingCameraMove));
 
         StageManager.onBirdLaunched += GetNextFollowTargetPosition;
@@ -68,16 +67,27 @@ public class CameraController : MonoBehaviour
         if (introRunning && Input.GetMouseButtonDown(0))
         {
             StopAllCoroutines();
+            introRunning = false;
             cam.transform.position = startingPosition;
         }
 
-        if (targetFollow != null)
+        if (!introRunning)
         {
-            var camY = Mathf.Clamp(targetFollow.transform.position.y, yMin + cameraOrthographicSize, yMax - cameraOrthographicSize);
-            var camX = Mathf.Clamp(targetFollow.transform.position.x, xMin + cameraRatio, xMax - cameraRatio);
-            var smoothPos = Vector3.Lerp(this.transform.position, new Vector3(camX, camY, cam.transform.position.z), followSpeed);
-            cam.transform.position = smoothPos;
+            if (targetFollow != null)
+            {
+                cam.transform.position = new Vector3(targetFollow.transform.position.x,
+                    targetFollow.transform.position.y, cam.transform.position.z);
+            }
+            else
+            {
+                cam.transform.position = startingPosition;
+            }
         }
+    }
+
+    private void OnDestroy()
+    {
+        StageManager.onBirdLaunched -= GetNextFollowTargetPosition;
     }
 
     public IEnumerator StartingCameraMove()
@@ -127,4 +137,6 @@ public class CameraController : MonoBehaviour
         }
         
     }
+    
+    
 }

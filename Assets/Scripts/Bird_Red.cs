@@ -10,9 +10,9 @@ public class Bird_Red : Bird
     [SerializeField] private float explosionSize = 2f;
     [SerializeField] private float explosionStrength = 2f;
 
-    public sealed override void Setup(StageManager stageManager) 
+    public sealed override void Setup(StageManager stageManager, AudioManager audioManager) 
     {
-        base.Setup(stageManager);
+        base.Setup(stageManager, audioManager);
         ps = GetComponent<ParticleSystem>();
     }
 
@@ -35,7 +35,8 @@ public class Bird_Red : Bird
         specialActivated = true;
 
         ps.Play();
-
+        audioManager.PlaySound("Explosion");
+            
         Invoke(nameof(DestroyMyself), ps.main.startLifetime.constantMax);
     }
 

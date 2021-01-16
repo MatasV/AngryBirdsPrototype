@@ -6,7 +6,7 @@ using UnityEngine;
 public class Bird : MonoBehaviour
 {
     private bool hasBeenLaunched = false;
-
+    [Header("Component References")]
     protected Rigidbody2D rigidBody;
     private Camera mainCam;
     private Transform slingShotPosition;
@@ -25,8 +25,10 @@ public class Bird : MonoBehaviour
     private Vector2 launchVelocity;
 
     protected bool specialActivated = false;
+    [Header("System References")]
     [SerializeField] protected StageManager stageManager;
-    public virtual void Setup(StageManager stageManager)
+    [SerializeField] protected AudioManager audioManager;
+    public virtual void Setup(StageManager stageManager, AudioManager audioManager)
     {
         rigidBody = GetComponent<Rigidbody2D>();
         
@@ -39,7 +41,9 @@ public class Bird : MonoBehaviour
         mainCam = Camera.main;
         springJoint = GetComponent<SpringJoint2D>();
         springJoint.connectedBody = slingShot.GetComponent<Rigidbody2D>();
+        
         this.stageManager = stageManager;
+        this.audioManager = audioManager;
     }
     private void Update()
     {

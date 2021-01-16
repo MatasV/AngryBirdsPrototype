@@ -5,22 +5,21 @@ using UnityEngine;
 
 public class Sling : MonoBehaviour
 {
+    [Header("Component References")]
     public Transform birdTransform;
     private Bird birdComponent;
-
     [SerializeField] private LineRenderer leftLineRenderer;
     [SerializeField] private LineRenderer rightLineRenderer;
     public Transform launchTransform;
-    
     [SerializeField] private GameObject trajectoryDotObj;
     
     private bool render = false;
-
-    private int numberOfTrajectoryDots = 10;
-    private float trajectoryTimeStep = 0.05f;
+    private const int NumberOfTrajectoryDots = 10;
+    private const float TrajectoryTimeStep = 0.05f;
 
     public List<GameObject> trajectoryDots = new List<GameObject>();
     
+    [Header("System References")]
     [SerializeField] private StageManager stageManager;
     public void RenderLines([NotNull]Transform _birdTransform)
     {
@@ -37,25 +36,25 @@ public class Sling : MonoBehaviour
     }
     private void InstantiateTrajectory()
     {
-        for (int i = 0; i < numberOfTrajectoryDots; i++) {
+        for (int i = 0; i < NumberOfTrajectoryDots; i++) {
             var trajectoryDot = Instantiate (trajectoryDotObj);
             trajectoryDots.Add(trajectoryDot);
             var color = trajectoryDot.GetComponent<SpriteRenderer>().color;
-            color.a = 1.0f / (numberOfTrajectoryDots+1.0f) * (numberOfTrajectoryDots-i+1.0f);
+            color.a = 1.0f / (NumberOfTrajectoryDots+1.0f) * (NumberOfTrajectoryDots-i+1.0f);
             trajectoryDot.GetComponent<SpriteRenderer>().color = color;
             trajectoryDot.SetActive(false);
         }
     }
     public void ShowTrajectory()
     {
-        for (int i = 0; i < numberOfTrajectoryDots; i++) {
+        for (int i = 0; i < NumberOfTrajectoryDots; i++) {
             trajectoryDots[i].SetActive(true);
-            trajectoryDots[i].transform.position = birdComponent.CalculatePosition(trajectoryTimeStep * i);
+            trajectoryDots[i].transform.position = birdComponent.CalculatePosition(TrajectoryTimeStep * i);
         }
     }
     public void HideTrajectory()
     {
-        for (int i = 0; i < numberOfTrajectoryDots; i++) {
+        for (int i = 0; i < NumberOfTrajectoryDots; i++) {
             trajectoryDots[i].SetActive(false);
         }
     }
