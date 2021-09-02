@@ -11,7 +11,6 @@ public class StageManager : ScriptableObject
     
     public delegate void OnBirdCountChanged(Queue<GameObject> birdQueue);
     public static OnBirdCountChanged onBirdCountChanged;
-
     public delegate void OnBirdLaunched(GameObject bird);
     public static OnBirdLaunched onBirdLaunched;
     

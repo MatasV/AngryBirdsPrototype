@@ -10,7 +10,7 @@ public class LifeDisplay : MonoBehaviour
     public TMP_Text healthDisplayText;
     public Transform visualDisplayHolder;
 
-    private void Start()
+    private void Awake()
     {
         StageManager.onBirdCountChanged += SetHealthText;
         StageManager.onBirdCountChanged += SetupImages;
@@ -51,7 +51,7 @@ public class LifeDisplay : MonoBehaviour
             birdImage.sprite = birdSprite;
             birdImage.preserveAspect = true;
 
-            Color color = new Color(birdImage.color.r, birdImage.color.g, birdImage.color.b, (float)i / (float)birdArray.Length + 0.1f);
+            Color color = new Color(birdImage.color.r, birdImage.color.g, birdImage.color.b, 1);
             birdImage.color = color;
 
             birdImage.transform.SetParent(visualDisplayHolder);
