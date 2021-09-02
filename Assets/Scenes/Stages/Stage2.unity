@@ -235,7 +235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!61 &98866044
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -681,7 +680,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1001 &253004732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -779,10 +777,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1130434378, guid: 6c3214b7fc02eb9488816b8a3ac93403, type: 3}
+      propertyPath: stageBirds
+      value: 
+      objectReference: {fileID: 11400000, guid: ef899f8615b93fc478620b8793bd8952,
+        type: 2}
     - target: {fileID: 2709711064482596380, guid: 6c3214b7fc02eb9488816b8a3ac93403,
         type: 3}
       propertyPath: m_Name
-      value: EntityController
+      value: StageManager
       objectReference: {fileID: 0}
     - target: {fileID: 2709711064482596386, guid: 6c3214b7fc02eb9488816b8a3ac93403,
         type: 3}
@@ -841,6 +844,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c3214b7fc02eb9488816b8a3ac93403, type: 3}
+--- !u!114 &272075592 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1130434378, guid: 6c3214b7fc02eb9488816b8a3ac93403,
+    type: 3}
+  m_PrefabInstance: {fileID: 272075591}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d47f30d1af295f647bda1daa643a3342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &274761402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,7 +1135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!61 &324274239
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2363,7 +2377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1001 &1176945438
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2517,6 +2530,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sling
       objectReference: {fileID: 0}
+    - target: {fileID: 8713319448611691765, guid: 059d58bceb3ea634a885e376e1f64f2a,
+        type: 3}
+      propertyPath: stageManager
+      value: 
+      objectReference: {fileID: 272075592}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 059d58bceb3ea634a885e376e1f64f2a, type: 3}
 --- !u!1 &1279699720
@@ -3158,7 +3176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1001 &1442032978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3350,7 +3367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!61 &1496409372
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3638,7 +3654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1 &1746986998
 GameObject:
   m_ObjectHideFlags: 0
@@ -4655,7 +4670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!61 &1918070072
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5035,7 +5049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1 &2066752578
 GameObject:
   m_ObjectHideFlags: 0

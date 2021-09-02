@@ -430,7 +430,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!4 &218408061 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8185152591719279874, guid: 7e290cc1009b83646a7e5087ea745edf,
@@ -1591,6 +1590,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089582533}
   m_CullTransparentMesh: 0
+--- !u!1 &1130434377 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2709711064482596380, guid: 6c3214b7fc02eb9488816b8a3ac93403,
+    type: 3}
+  m_PrefabInstance: {fileID: 2709711064866028547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1130434378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130434377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d47f30d1af295f647bda1daa643a3342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sling: {fileID: 0}
+  birdPrefabs: []
+  DebugMode: 0
+  scoreManager: {fileID: 11400000, guid: 98d7b62a82e5cc241b6a026792413698, type: 2}
+  audioManager: {fileID: 11400000, guid: c51bd9dc06a7e994583e8bc13c692c03, type: 2}
+  stageBirds: {fileID: 11400000, guid: 7a436e14e74256e408cd7b042ebd9506, type: 2}
+  movingEntities: []
 --- !u!1 &1176242545
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,7 +1760,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1 &1253560450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2454,7 +2477,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1001 &1442032978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2739,7 +2761,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1 &1746986998
 GameObject:
   m_ObjectHideFlags: 0
@@ -3910,7 +3931,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790efa962bae8046ae8a1ab0ba368c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
 --- !u!1 &2066752578
 GameObject:
   m_ObjectHideFlags: 0
@@ -4327,7 +4347,7 @@ PrefabInstance:
     - target: {fileID: 2709711064482596380, guid: 6c3214b7fc02eb9488816b8a3ac93403,
         type: 3}
       propertyPath: m_Name
-      value: EntityController
+      value: StageManager
       objectReference: {fileID: 0}
     - target: {fileID: 2709711064482596386, guid: 6c3214b7fc02eb9488816b8a3ac93403,
         type: 3}
@@ -4390,8 +4410,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 7a436e14e74256e408cd7b042ebd9506,
         type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2709711064482596387, guid: 6c3214b7fc02eb9488816b8a3ac93403, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6c3214b7fc02eb9488816b8a3ac93403, type: 3}
+--- !u!114 &2709711064866028548 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1130434378, guid: 6c3214b7fc02eb9488816b8a3ac93403,
+    type: 3}
+  m_PrefabInstance: {fileID: 2709711064866028547}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130434377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d47f30d1af295f647bda1daa643a3342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8185152590311713811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4545,6 +4578,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: c51bd9dc06a7e994583e8bc13c692c03,
         type: 2}
+    - target: {fileID: 8713319448611691765, guid: 059d58bceb3ea634a885e376e1f64f2a,
+        type: 3}
+      propertyPath: stageManager
+      value: 
+      objectReference: {fileID: 2709711064866028548}
     - target: {fileID: 8713319449459043562, guid: 059d58bceb3ea634a885e376e1f64f2a,
         type: 3}
       propertyPath: m_LocalPosition.x

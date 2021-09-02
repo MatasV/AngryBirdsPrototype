@@ -5,8 +5,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu]
-public class StageManager : ScriptableObject
+public class StageManager : MonoBehaviour
 {
     
     public delegate void OnBirdCountChanged(Queue<GameObject> birdQueue);
@@ -25,9 +24,7 @@ public class StageManager : ScriptableObject
 
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private AudioManager audioManager;
-    
-    [HideInInspector] public EntityController entityController;
-    
+
     private readonly List<Enemy> activeEnemies = new List<Enemy>();
 
     private const float AllMovingEntitiesStoppedCheckTime = 2f;
@@ -36,6 +33,15 @@ public class StageManager : ScriptableObject
     private bool stageRunning; 
     private void BirdCountChanged() => onBirdCountChanged?.Invoke(birdQueue);
     private bool AnyBirdsLeft => birdQueue.Count > 0;
+    
+    [SerializeField] private StageBirdData stageBirds;
+    
+    public List<Rigidbody2D> movingEntities = new List<Rigidbody2D>();
+    private void Awake()
+    {
+        birdPrefabs = stageBirds.birds.ToArray();
+    }
+    
     public void StartUp(Sling sling)
     {
         onBirdLaunched += Launched;
@@ -64,7 +70,7 @@ public class StageManager : ScriptableObject
     {
         var movingEntityCount = 0;
 
-        foreach (var movingEntity in entityController.movingEntities)
+        foreach (var movingEntity in movingEntities)
         {
             if (Math.Abs(movingEntity.velocity.magnitude) > 0.2f || movingEntity.angularVelocity > 0.2f)
             {
@@ -127,7 +133,7 @@ public class StageManager : ScriptableObject
     
     public void UnregisterMovingEntity([NotNull] Rigidbody2D rb)
     {
-        entityController.movingEntities.Remove(rb);
+        movingEntities.Remove(rb);
     }
     
     public void RegisterActiveEnemy([NotNull] Enemy enemy)
@@ -137,7 +143,7 @@ public class StageManager : ScriptableObject
     }
     public void RegisterMovingEntity([NotNull] Rigidbody2D rb)
     {
-        entityController.movingEntities.Add(rb);
+        movingEntities.Add(rb);
     }
 
     private void Continue()

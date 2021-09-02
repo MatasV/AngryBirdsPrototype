@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2709711064482596386}
-  - component: {fileID: 2709711064482596387}
+  - component: {fileID: 1130434378}
   m_Layer: 0
-  m_Name: EntityController
+  m_Name: StageManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2709711064482596387
+--- !u!114 &1130434378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,9 +40,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2709711064482596380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b5c39fe5aab88d4f81bf80a9a774b18, type: 3}
+  m_Script: {fileID: 11500000, guid: d47f30d1af295f647bda1daa643a3342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageManager: {fileID: 11400000, guid: fc2a48edc0d37064c82f83f44a4aa026, type: 2}
-  stageBirds: {fileID: 11400000, guid: ef899f8615b93fc478620b8793bd8952, type: 2}
+  sling: {fileID: 0}
+  birdPrefabs: []
+  DebugMode: 0
+  scoreManager: {fileID: 11400000, guid: 98d7b62a82e5cc241b6a026792413698, type: 2}
+  audioManager: {fileID: 11400000, guid: c51bd9dc06a7e994583e8bc13c692c03, type: 2}
+  stageBirds: {fileID: 11400000, guid: 7a436e14e74256e408cd7b042ebd9506, type: 2}
   movingEntities: []

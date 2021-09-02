@@ -54,6 +54,8 @@ public class Pig : MonoBehaviour, Enemy
 
     public void Setup()
     {
+        stageManager = FindObjectOfType<StageManager>();
+        
         rend = GetComponent<SpriteRenderer>();
         stageManager.RegisterMovingEntity(GetComponent<Rigidbody2D>());
         stageManager.RegisterActiveEnemy(this);
