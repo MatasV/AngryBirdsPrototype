@@ -78,7 +78,7 @@ public class Sling : MonoBehaviour
         leftLineRenderer.sortingOrder = 3;
         rightLineRenderer.sortingOrder = -1;
         InstantiateTrajectory();
-        stageManager.StartUp(this);
+        stageManager.Init(this);
     }
 
     void Update()

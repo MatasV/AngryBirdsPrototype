@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Bird_Yellow : Bird
@@ -10,7 +12,7 @@ public class Bird_Yellow : Bird
     {
         if (specialActivated) return;
         specialActivated = true;
-        Instantiate(birdCloneGO, transform.position, transform.rotation).GetComponent<Bird_Yellow_Clone>().Init(rigidBody);
+        Instantiate(birdCloneGO, transform.position, transform.rotation).GetComponent<Bird_Yellow_Clone>().Init(rigidBody, stageManager);
         
     }
 }

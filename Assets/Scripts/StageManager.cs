@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,21 +36,22 @@ public class StageManager : MonoBehaviour
     private bool AnyBirdsLeft => birdQueue.Count > 0;
     
     [SerializeField] private StageBirdData stageBirds;
+    [SerializeField] private string nextStageName;
     
     public List<Rigidbody2D> movingEntities = new List<Rigidbody2D>();
+    public string GetNextStage() => nextStageName;
     private void Awake()
     {
         birdPrefabs = stageBirds.birds.ToArray();
     }
     
-    public void StartUp(Sling sling)
+    public void Init(Sling _sling)
     {
-        onBirdLaunched += Launched;
-        this.sling = sling;
+        onBirdLaunched += Launched; 
+        sling = _sling;
         Setup();
         SpawnNextBird();
     }
-
     public void Update()
     {
         if (!stageRunning) return;
@@ -84,7 +86,6 @@ public class StageManager : MonoBehaviour
     public void CheckWinConditions()
     {
         stageRunning = false;
-        Debug.Log("CheckWinConditions" + activeEnemies.Count);
 
         if (activeEnemies.Count > 0 && AnyBirdsLeft || sling.IsBirdOnSling())
         {
@@ -120,7 +121,6 @@ public class StageManager : MonoBehaviour
 
     private void Launched(GameObject obj)
     {
-        Debug.Log("Launched");
         stageRunning = true;
         audioManager.PlaySound("Launch");
     }

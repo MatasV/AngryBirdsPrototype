@@ -15,6 +15,7 @@ public class ScreenFader : MonoBehaviour
 
     public void StartScene(string name)
     {
+        Debug.Log(name);
         StartCoroutine(nameof(ChangeScene), name);
     }
     private IEnumerator ChangeScene(string sceneName)

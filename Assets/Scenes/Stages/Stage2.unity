@@ -778,10 +778,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1130434378, guid: 6c3214b7fc02eb9488816b8a3ac93403, type: 3}
+      propertyPath: nextStage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1130434378, guid: 6c3214b7fc02eb9488816b8a3ac93403, type: 3}
       propertyPath: stageBirds
       value: 
       objectReference: {fileID: 11400000, guid: ef899f8615b93fc478620b8793bd8952,
         type: 2}
+    - target: {fileID: 1130434378, guid: 6c3214b7fc02eb9488816b8a3ac93403, type: 3}
+      propertyPath: nextStageName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2709711064482596380, guid: 6c3214b7fc02eb9488816b8a3ac93403,
         type: 3}
       propertyPath: m_Name
@@ -4014,6 +4022,7 @@ MonoBehaviour:
   holder: {fileID: 1339061459}
   titleText: {fileID: 1279699722}
   sceneLoader: {fileID: 11400000, guid: e6571e91e491cb444a053f91b7beeeae, type: 2}
+  nextSceneButtonHolder: {fileID: 0}
 --- !u!1 &1795349513
 GameObject:
   m_ObjectHideFlags: 0

@@ -78,7 +78,6 @@ public class Pig : MonoBehaviour, Enemy
     }
     public void OnDeath()
     {
-        Debug.Log("Dead");
         if (!dead)
         {
             dead = true;

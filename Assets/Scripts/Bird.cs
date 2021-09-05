@@ -95,8 +95,6 @@ public class Bird : MonoBehaviour
     
     private void OnMouseDown()
     {
-        Debug.Log("Pressed On Bird");
-        
         if (!hasBeenLaunched)
         {
             dragging = true;
