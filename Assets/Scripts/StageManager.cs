@@ -28,7 +28,7 @@ public class StageManager : MonoBehaviour
 
     private readonly List<Enemy> activeEnemies = new List<Enemy>();
 
-    private const float AllMovingEntitiesStoppedCheckTime = 2f;
+    private const float AllMovingEntitiesStoppedCheckTime = 1.5f;
     private float allMovingEntitiesStoppedTimer;
 
     private bool stageRunning; 
