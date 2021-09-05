@@ -3840,8 +3840,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 2709711064866028548}
+        m_TargetAssemblyTypeName: StageManager, Assembly-CSharp
         m_MethodName: CheckWinConditions
         m_Mode: 1
         m_Arguments:
